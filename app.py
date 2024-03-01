@@ -43,5 +43,3 @@ def bird(state):
     out = str([bird, weather])
     return out, 200, {'Content-Type': 'application/json'}
 
-# if __name__ == '__main__':
-#     get_bird('KY')
