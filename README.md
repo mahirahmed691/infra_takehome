@@ -29,11 +29,15 @@ CMD ["python", "app.py"]
 ## Build the Docker image:
 
 
-```docker build -t birdapp:latest .```
+```
+docker build -t birdapp:latest .
+```
 
 ## Since Kind runs in Docker, Docker image directly into the Kind cluster:
 
-``` kind load docker-image birdapp:latest --name my-cluster ```
+``` 
+kind load docker-image birdapp:latest --name my-cluster
+```
 
 
 # install helm chart
