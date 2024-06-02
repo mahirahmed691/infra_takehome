@@ -42,8 +42,11 @@ kind load docker-image birdapp:latest --name my-cluster
 
 # install helm chart
 
-```cd helm/birds ```
-```helm install birds . ```
+``` 
+cd helm/birds
+helm install birds .
+```
+
 
 # Verify Deployment
 ``` 
@@ -73,7 +76,7 @@ image:
 helm list
 ```
 
-`
+```
 NAME    NAMESPACE    REVISION    UPDATED                                 STATUS      CHART           APP VERSION
 birds   default      1           2023-06-02 12:34:56.123456 -0700 PDT    deployed    birds-0.1.0     1.0
-`
+```
