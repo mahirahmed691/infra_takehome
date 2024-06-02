@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: birdApp # Changed this to Docker image name
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest" # Changed this to the appropriate tag 
 
 imagePullSecrets: []
 nameOverride: ""

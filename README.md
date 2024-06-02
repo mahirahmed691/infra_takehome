@@ -1,11 +1,73 @@
-## Takehome
+# Steps taken to create helm chart using the template provided
 
-### This Project Has Got Problems
+## Prerequisites
+### Kind: Installed Kind to create a local Kubernetes cluster.
+### Helm: Installed Helm on your local machine.
+### Docker: Python application will be containerized using Docker.
+### Kubectl: Installed kubectl to interact with the Kubernetes cluster.
 
-There are a number of issues with this project.  The goal is to identify and fix as many of the problems as you can and get it to deploy to kubernetes successfully.  If you don't feel like fixing a particular problem, just write down what you would have done so we can discuss it together.
+# Create Kind Kubernetes cluster
 
-If you don't have a kubernetes cluster handy, you can deploy one locally with [kind](https://kind.sigs.k8s.io/).
+```kind create cluster --name my-cluster```
 
-Please don't take this as a reflection of the work we do here.  We promise it's not this bad. The goal here is to have you show us that you can debug stuff you didn't write and get it working when needed.
+# Created a Docker Image for the Python Application
 
-If you have worked or are working on something else that you're more interested in or proud of, and that you can share, feel free to send that back instead of completing this project.
+```
+# Dockerfile
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+COPY . .
+
+CMD ["python", "app.py"]
+```
+
+## Build the Docker image:
+
+
+```docker build -t birdapp:latest .```
+
+## Since Kind runs in Docker, Docker image directly into the Kind cluster:
+
+``` kind load docker-image birdapp:latest --name my-cluster ```
+
+
+# install helm chart
+
+```cd helm/birds ```
+```helm install birds . ```
+
+# Verify Deployment
+``` 
+kubectl get deployments
+kubectl get services
+```
+
+
+# Additional Information
+
+``` 
+# Default values for birds.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: birdApp # Changed this to Docker image name   <--- name was changed to use docker image
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest" # Changed this to the appropriate tag <--- tag was added to use latest image
+
+```
+
+``` helm list ```
+
+```
+NAME    NAMESPACE    REVISION    UPDATED                                 STATUS      CHART           APP VERSION
+birds   default      1           2023-06-02 12:34:56.123456 -0700 PDT    deployed    birds-0.1.0     1.0
+```
